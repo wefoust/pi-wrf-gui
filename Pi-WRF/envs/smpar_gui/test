@@ -1,5 +1,0 @@
-FROM raspbian/stretch
-SHELL ["/bin/bash","-c"]
-RUN mkdir test
-#ADD /home/pi/Desktop/Pi-WRF/resources/dynamic_namelist.wps /test
-ADD ./resources/dynamic_namelist.wps /test
