@@ -12,14 +12,14 @@ must be installed as well.
 2. Build the image with the command "docker build -f envs/smpar_gui/dockerfile ."
 
 
-# Create a container & launch app (Linux))
+### Create a container & launch app (Linux))
 1. create container with "docker run -it --rm --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" id#"
 2. run app with the command "run"
 
 
 
-#Create a container (MAC)
-1. type the command **"open -a XQuartz"
+### Create a container (MAC)
+1. type the command **"open -a XQuartz"**
 2. IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 3. xhost + $IP
 4. docker run -it --rm -e DISPLAY=$IP:0 -v /tmp/.X11-unix:/tmp/.X11-unix id#
