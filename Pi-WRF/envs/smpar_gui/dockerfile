@@ -33,10 +33,10 @@ RUN apt-get update && apt-get install -y \
         curl                         \
         g++                          \
         build-essential              \
-	    libpng12-0                   \
-	    python3-pip                  \
-	    imagemagick                  \
-	    unzip                        \
+	libpng12-0                   \
+	python3-pip                  \
+	imagemagick                  \
+	unzip                        \
         python3-pil.imagetk          \
         python3-matplotlib           \
         python3-mpltoolkits.basemap  \
