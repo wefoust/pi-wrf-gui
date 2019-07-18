@@ -11,8 +11,8 @@ ENV     DIR=/pi-wrf/WRF_System/lib/LIBRARIES                       \
         JASPERINC=/pi-wrf/WRF_System/lib/LIBRARIES/grib2/include   \
         NETCDF=/pi-wrf/WRF_System/lib/LIBRARIES/netcdf             \
         NCARG_ROOT=/pi-wrf/WRF_System/ncl_6.4.0                    \
-	    WRFIO_NCD_LARGE_FILE_SUPPORT=1                         \
-	    PATH="${NCARG_ROOT}/bin:${PATH}"
+	WRFIO_NCD_LARGE_FILE_SUPPORT=1                             \
+	PATH="${NCARG_ROOT}/bin:${PATH}"
 
 
 ENV PATH="${NCARG_ROOT}/bin:${PATH}"
@@ -48,8 +48,8 @@ RUN apt-get update && apt-get install -y \
         && mkdir -p /pi-wrf/WRF_System/lib/LIBRARIES         \
         && mkdir /pi-wrf/WRF_System/lib/DATA/                \
         && mkdir -p /pi-wrf/pi_wrf/pi_wrf                    \
-	    && mkdir -p /pi-wrf/pi_wrf/pi_wrf/Pages          \
-	    && mkdir -p /pi-wrf/Output                       \
+	&& mkdir -p /pi-wrf/pi_wrf/pi_wrf/Pages              \
+	&& mkdir -p /pi-wrf/Output                           \
         && mkdir -p /pi-wrf/WRF_System/Plotting_Scripts      \
         #
         #
@@ -91,7 +91,7 @@ RUN apt-get update && apt-get install -y \
 	&& cd $DIR/netcdf-4.1.3                                                                 			\
         && ./configure --prefix=$DIR/netcdf --disable-dap --disable-netcdf-4 --disable-shared   			\
         && make                                                                                 			\
-        && make install && make check                                                           			\
+        && make install                                                                         			\
         #
         #
         #  INSTALLING MPICH LIBRARY
