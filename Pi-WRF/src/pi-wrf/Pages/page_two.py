@@ -110,7 +110,7 @@ class PageTwo(tk.Frame):
         frame2_toolbar=tk.Frame(self)
         frame2_toolbar.pack(fill=tk.X)
                
-        frame2_map=tk.Frame(self,bg="green")
+        frame2_map=tk.Frame(self)
         frame2_map.pack(fill=tk.X,side=tk.BOTTOM,expand=0)
         fig, ax = plt.subplots()
         fig.patch.set_facecolor(gui_color[0])
@@ -127,16 +127,13 @@ class PageTwo(tk.Frame):
         
         # Creating buttons on page
         from Pages.page_two   import PageTwo
-        btn_1 = tk.Button(frame2_map,text="Home",font=("Arial Bold",40),borderwidth=5,bg=gui_color[2],activebackground=gui_color[3],command=lambda : controller.show_frame(PageTwo))
-        btn_1.pack(side=tk.LEFT,expand=1,fill=tk.X)
-
         from Pages.start_page   import StartPage
-        btn_2 = tk.Button(frame2_map,text="Back to Start/End Time",font=("Arial Bold",40),borderwidth=5,bg=gui_color[2],activebackground=gui_color[3],command=lambda : controller.show_frame(StartPage))
-        btn_2.pack(side=tk.LEFT,fill=tk.X,expand=1)
+        btn_1 = tk.Button(frame2_map,text="Home",bg=gui_color[2],activebackground=gui_color[3],command=lambda : controller.show_frame(StartPage))
+        btn_1.pack(side=tk.LEFT,fill=tk.X)
 
         from Pages.page_three import PageThree
-        btn_3 = tk.Button(frame2_map,text="Confirm Domain",font=("Arial Bold",40),borderwidth=5,bg=gui_color[2],activebackground=gui_color[3],command=lambda : [ds.set_domain(xlim,ylim),controller.show_frame(PageThree),reset_domain(default_lon_limits,default_lat_limits)])
-        btn_3.pack(side=tk.RIGHT,fill=tk.X,expand=1)
+        btn_2 = tk.Button(frame2_map,text="Confirm Domain",bg=gui_color[2],activebackground=gui_color[3],command=lambda : [ds.set_domain(xlim,ylim),controller.show_frame(PageThree),reset_domain(default_lon_limits$
+        btn_2.pack(side=tk.RIGHT,fill=tk.X)
         
         # Creating Matplotlib figure
         m=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c',area_thresh=1,ax=ax)
