@@ -15,6 +15,10 @@ def run_command(command):
             btn_run_model.config(state="disabled")            
             btn_view_output.config(text="View Output",bd=2,state="normal",bg=gui_color[4],activebackground=gui_color[5],font=("Arial Bold",16))
             btn_view_output.pack(fill=tk.X,side=tk.LEFT)
+            exit_button.config(text="exit",state="normal",bg=gui_color[2],activebackground=gui_color[3])
+            exit_button.pack(fill=tk.X,side=tk.RIGHT)
+            reset_button.config(text="reset",bg=gui_color[2],activebackground=gui_color[3])
+            reset_button.pack(fill=tk.X,side=tk.LEFT)
             break
         if output:         
             txt.see(tk.END)
@@ -72,3 +76,14 @@ class PageThree(tk.Frame):
         btn_view_output=tk.Button(frame2_map,bd=0,state="normal",command=lambda :[retrieve_figure(),controller.show_frame(Pages.page_four.FigurePage),reset()])
         btn_view_output.pack(fill=tk.X,side=tk.LEFT)
         btn_view_output.pack_forget()
+        
+        global exit_button,reset_button
+        frame4_low_nav_bar=tk.Frame(self,bg=gui_color[1])
+        frame4_low_nav_bar.pack(fill=tk.X,side=tk.BOTTOM,expand=0)
+        exit_button=tk.Button(frame4_low_nav_bar,text="reset",bg=gui_color[2],activebackground=gui_color[3],command=lambda: controller.quit_app())
+        exit_button.pack_forget()
+        from Pages.start_page   import StartPage
+        reset_button=tk.Button(frame4_low_nav_bar,bd=0,state="normal",command=lambda : controller.show_frame(StartPage))
+        reset_button.pack_forget()
+
+
