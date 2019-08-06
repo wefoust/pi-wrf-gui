@@ -1,0 +1,117 @@
+# CLI-Version
+FROM raspbian/stretch
+MAINTAINER Eliott Foust (wefoust@ucar.edu)
+SHELL ["/bin/bash","-c"]
+ENV DIR=/WRF_System/lib/LIBRARIES                           \
+        CC=gcc                                              \
+        FC=gfortran                                         \
+        F77=gfortran                                        \
+        CXX=g++                                             \
+        JASPERLIB=/WRF_System/lib/LIBRARIES/grib2/lib       \
+        JASPERINC=/WRF_System/lib/LIBRARIES/grib2/include   \
+        NETCDF=/WRF_System/lib/LIBRARIES/netcdf             \
+        PATH=/WRF_System/lib/LIBRARIES/netcdf/bin:$PATH     \
+        PATH=/WRF_System/lib/LIBRARIES/mpich/bin:$PATH
+
+# DOWNLOADING LIBRARIES
+RUN apt-get update && apt-get install -y \
+        wget              \
+        csh               \
+        nco               \
+        m4                \
+        libpng-dev        \
+        gfortran          \
+        file              \
+        make              \
+        curl              \
+        g++               \
+        build-essential   \
+	libpng12-0        \
+        #                                        
+        #
+        # SETTING UP DIRECTORIES                        #############################
+        && mkdir -p /WRF_System/lib/LIBRARIES         \
+        && mkdir /WRF_System/lib/DATA/                \
+        #
+        #
+        # DOWNLOADING WRF DEPENDENCIES     ##########################	
+        && cd $DIR                                                                                                                                            \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/mpich-3.0.4.tar.gz --output $DIR/mpich-3.0.4.tar.gz           \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/netcdf-4.1.3.tar.gz --output $DIR/netcdf-4.1.3.tar.gz         \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-1.900.1.tar.gz --output $DIR/jasper-1.900.1.tar.gz     \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/libpng-1.2.50.tar.gz --output $DIR/libpng-1.2.50.tar.gz       \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/zlib-1.2.7.tar.gz --output $DIR/zlib-1.2.7.tar.gz             \
+        && cd /WRF_System/                                                                                                                                    \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/src/WRFV3.9.1.TAR.gz                                                                                    \
+        && curl -O -L -J http://www2.mmm.ucar.edu/wrf/src/WPSV3.9.1.TAR.gz                                                                                    \
+        #
+        # EXTRACTING LIBRARIES                             #############################
+        && tar -zxvf /WRF_System/WRFV3.9.1.TAR.gz -C /WRF_System/             \
+        && tar -zxvf /WRF_System/WPSV3.9.1.TAR.gz -C /WRF_System/             \
+        && tar -zxvf $DIR/mpich-3.0.4.tar.gz -C $DIR/                         \
+        && tar -zxvf $DIR/libpng-1.2.50.tar.gz -C $DIR/                       \
+        && tar -zxvf $DIR/netcdf-4.1.3.tar.gz  -C $DIR/                       \
+        && tar -zxvf $DIR/jasper-1.900.1.tar.gz -C $DIR/                      \
+        && tar -zxvf $DIR/zlib-1.2.7.tar.gz     -C $DIR/                      \
+        && rm $DIR/*.gz                                                       \
+        && rm /WRF_System/*.gz                                                \
+        #
+        #
+        # INSTALLING NETCDF LIBRARY
+        && cd $DIR/netcdf-4.1.3                                                                 \
+        && ./configure --prefix=$DIR/netcdf --disable-dap --disable-netcdf-4 --disable-shared   \
+        && make                                                                                 \
+        && make install && make check                                                           \
+        #
+        #
+        #  INSTALLING MPICH LIBRARY
+        && cd $DIR/mpich-3.0.4/                       \
+        && ./configure --prefix=$DIR/mpich            \
+        && make                                       \
+        && make install && make check                 \
+        #
+        #
+        # Installing ZLIB LIBRARY                     \
+        && cd $DIR/zlib-1.2.7/                        \
+        && ./configure --prefix=$DIR/grib2            \
+        && make                                       \
+        && make install                               \
+        #
+        #
+        # INSTALLING LIBPNG LIBRARY
+        && cd $DIR/libpng-1.2.50/                     \
+        && ./configure --prefix=$DIR/grib2            \
+        && make                                       \
+        && make install                               \
+         #
+         #
+        # INSTALLING JASPER LIBRARY
+        && cd $DIR/jasper-1.900.1/                    \
+        && ./configure --prefix=$DIR/grib2            \
+        && make                                       \
+        && make install                               \
+        #
+        #
+        # CONFIGURING  AND Compile WRFV3.9.1-DMPAR
+	# To compile a serial implementation use option 32, SMPAR option 33, DMPAR option 34
+        && cd /WRF_System/WRFV3/                                                                                \
+        && grep -rl x86_64 /WRF_System/WRFV3/arch/configure_new.defaults | xargs sed -i 's/x86_64/armv7l/g'     \
+        && cd /WRF_System/WRFV3/                                                                                \
+        && ./configure <<< $'33\r1\r'                                                                           \
+        && ./compile em_real >& log.compile                                                                     \
+        #
+        #
+        #Configure & Compile WPS
+        && sed -i 's/FFFFFFFF00000000/FFFFFFFF0000000/g' /WRF_System/WPS/ungrib/src/ngl/g2/intmath.f                           \
+        && grep -rl x86_64 /WRF_System/WPS/arch/configure.defaults | xargs sed -i 's/x86_64/armv7l/g'                          \
+        && cd /WRF_System/WPS/                                                                                                 \
+	&& sed -i 's/CONFIGURE_NETCDFF_LIB -lnetcdf/CONFIGURE_NETCDFF_LIB -lnetcdf -lgomp/g' /WRF_System/WPS/arch/preamble     \	
+	&& ./configure <<< $'1\r1\r'                                                                                           \
+	&& ./compile
+
+
+COPY aux_scripts /WRF_System/lib/aux_scripts
+COPY dynamic_runtime_files /WRF_System/lib/dynamic_runtime_files
+COPY reference_files /WRF_System/lib/reference_files
+COPY WPS_GEOG /WRF_System/lib/WPS_GEOG
+COPY Run_WRF /WRF_System/
