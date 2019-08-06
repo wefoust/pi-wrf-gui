@@ -11,7 +11,7 @@ def run_command(command):
     while True:
         output=process.stdout.readline().decode()
         if output == '' and process.poll() is not None:
-            subprocess.call('../../WRF_System/lib/Run_WRF_GUI_NCL', shell=True)
+            subprocess.call('/pi-wrf/WRF_System/lib/Run_WRF_GUI_NCL', shell=True)
             btn_run_model.config(state="disabled")            
             btn_view_output.config(text="View Output",
                                    bd=2,
@@ -36,7 +36,7 @@ def run_command(command):
     return rc
 
 def putintext():
-    txt.insert('1.0',run_command('../../Run_WRF_GUI'))
+    txt.insert('1.0',run_command('/pi-wrf/Run_WRF_GUI'))
     
 def reset():
     txt.delete('1.0',tk.END)
@@ -51,10 +51,10 @@ class PageThree(tk.Frame):
 
         import Pages.page_four
         def retrieve_figure():
-            subprocess.call('convert ../../Output/Your_Domain_Relative.png -resize {}x{} ../../Output/Your_Domain_Relative.gif'\
+            subprocess.call('convert /pi-wrf/Output/Your_Domain_Relative.png -resize {}x{} ../../Output/Your_Domain_Relative.gif'\
                             .format(screenwidth*.8,screenheight*.8), 
                             shell=True)
-            photo=tk.PhotoImage(file="../../Output/Your_Domain_Relative.gif")
+            photo=tk.PhotoImage(file="/pi-wrf/Output/Your_Domain_Relative.gif")
             Pages.page_four.image_display.config(image=photo)
             Pages.page_four.image_display.image=photo
           
