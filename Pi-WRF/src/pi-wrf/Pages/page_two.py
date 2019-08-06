@@ -28,8 +28,14 @@ class PageTwo(tk.Frame):
             ylim=np.sort(np.array([erelease.ydata,eclick.ydata]))
             ax.set_xlim(xlim)
             ax.set_ylim(ylim)
-            domain_x_length=ds.calculate_distances(min(xlim),max(xlim),mean([min(ylim),max(ylim)]),mean([min(ylim),max(ylim)]))
-            domain_y_length=ds.calculate_distances(min(xlim),min(xlim),min(ylim),max(ylim))
+            domain_x_length=ds.calculate_distances(min(xlim),
+                                                   max(xlim),
+                                                   mean([min(ylim),max(ylim)]),
+                                                   mean([min(ylim),max(ylim)]))
+            domain_y_length=ds.calculate_distances(min(xlim),
+                                                   min(xlim),
+                                                   min(ylim),
+                                                   max(ylim))
             domain_area=domain_x_length*domain_y_length
             gridcells=round(domain_area/30/30)
             lbl_gridcells.configure(text='Approximate # of gridcells : {:,}'.format(gridcells))
@@ -115,28 +121,52 @@ class PageTwo(tk.Frame):
         fig, ax = plt.subplots()
         fig.patch.set_facecolor(gui_color[0])
     
-        btn_reset=tk.Button(frame2_toolbar,text="Reset Domain",font=("Arial Bold",10),command=lambda : reset_domain(default_lon_limits,default_lat_limits))
+        btn_reset=tk.Button(frame2_toolbar,
+                            text="Reset Domain",
+                            font=("Arial Bold",10),
+                            command=lambda : reset_domain(default_lon_limits,default_lat_limits))
         btn_reset.pack(side=tk.LEFT)
         
-        btn_zoom_out=tk.Button(frame2_toolbar,text="Zoom Out",font=("Arial Bold",10),command=lambda :  zoom_out())
+        btn_zoom_out=tk.Button(frame2_toolbar,
+                               text="Zoom Out",
+                               font=("Arial Bold",10),
+                               command=lambda :  zoom_out())
         btn_zoom_out.pack(side=tk.LEFT)
         
         gridcells=round(510000000/(30*30))
-        lbl_gridcells=tk.Label(frame2_toolbar,text="Approximate # of gridcells : {}".format(gridcells),font=("Arial Bold",10))
+        lbl_gridcells=tk.Label(frame2_toolbar,
+                               text="Approximate # of gridcells : {}".format(gridcells),
+                               font=("Arial Bold",10))
         lbl_gridcells.pack(side=tk.RIGHT)
         
         # Creating buttons on page
         from Pages.page_two   import PageTwo
         from Pages.start_page   import StartPage
-        btn_1 = tk.Button(frame2_map,text="Home",bg=gui_color[2],activebackground=gui_color[3],command=lambda : controller.show_frame(StartPage))
+        btn_1 = tk.Button(frame2_map,
+                          text="Home",
+                          bg=gui_color[2],
+                          activebackground=gui_color[3],
+                          command=lambda : controller.show_frame(StartPage))
         btn_1.pack(side=tk.LEFT,fill=tk.X)
 
         from Pages.page_three import PageThree
-        btn_2 = tk.Button(frame2_map,text="Confirm Domain",bg=gui_color[2],activebackground=gui_color[3],command=lambda : [ds.set_domain(xlim,ylim),controller.show_frame(PageThree),reset_domain(default_lon_limits$
+        btn_2 = tk.Button(frame2_map,
+                          text="Confirm Domain",
+                          bg=gui_color[2],
+                          activebackground=gui_color[3],
+                          command=lambda : [ds.set_domain(xlim,ylim),controller.show_frame(PageThree),
+                                            reset_domain(default_lon_limits)])
         btn_2.pack(side=tk.RIGHT,fill=tk.X)
         
         # Creating Matplotlib figure
-        m=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c',area_thresh=1,ax=ax)
+        m=Basemap(projection='cyl',
+                  llcrnrlat=-90,
+                  urcrnrlat=90,
+                  llcrnrlon=-180,
+                  urcrnrlon=180,
+                  resolution='c',
+                  area_thresh=1,
+                  ax=ax)
         m.drawcoastlines(color="white",linewidth=.5)
         m.fillcontinents(color='forestgreen',lake_color='cornflowerblue')
         test_hline=m.drawparallels(np.arange(-90,91,30))
@@ -151,6 +181,12 @@ class PageTwo(tk.Frame):
         canvas._tkcanvas.pack(side=tk.BOTTOM)
  
         # Creating rectangle selector and binding it (again, this should be removed)
-        toggle_selector.RS = RectangleSelector(ax,line_select_callback, drawtype='box', useblit=True, interactive=False,lineprops=dict(color='black',linewidth=4),rectprops=dict(facecolor="black",edgecolor='black',alpha=.4,fill=True))
+        toggle_selector.RS = RectangleSelector(ax,
+                                               line_select_callback, 
+                                               drawtype='box', 
+                                               useblit=True, 
+                                               interactive=False,
+                                               lineprops=dict(color='black',linewidth=4),
+                                               rectprops=dict(facecolor="black",edgecolor='black',alpha=.4,fill=True))
         plt.connect('key_press_event', toggle_selector) 
         
