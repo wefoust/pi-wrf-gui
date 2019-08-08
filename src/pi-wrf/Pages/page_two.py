@@ -110,7 +110,10 @@ class PageTwo(tk.Frame):
         # Creating page and frames
         frame1_topbanner=tk.Frame(self)
         frame1_topbanner.pack(side=tk.TOP,fill=tk.X)
-        topbanner = tk.Label(frame1_topbanner,text="Choose Domain and Resolution", font=("Arial Bold",40),bg=gui_color[1])
+        topbanner = tk.Label(frame1_topbanner,
+                             text="Choose Domain and Resolution",
+                             font=("Arial Bold",40),
+                             bg=gui_color[1])
         topbanner.pack(fill=tk.X)
         
         frame2_toolbar=tk.Frame(self)
@@ -164,7 +167,7 @@ class PageTwo(tk.Frame):
                   urcrnrlat=90,
                   llcrnrlon=-180,
                   urcrnrlon=180,
-                  resolution='c',
+                  resolution='l',
                   area_thresh=1,
                   ax=ax)
         m.drawcoastlines(color="white",linewidth=.5)
