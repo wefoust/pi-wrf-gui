@@ -2,6 +2,7 @@
 import sys
 from importlist import *
 import requests
+from tkinter import messagebox
 
 #Set Color Scheme and Font
 gui_color=color_scheme(1)                                            # 1=default
@@ -56,7 +57,9 @@ class StartPage(tk.Frame):
                           borderwidth=5,
                           bg=gui_color[2],
                           activebackground=gui_color[3],
-                          width=20)
+                          width=20,
+                          command=lambda : messagebox.showwarning("Warning", 
+                                                                   "Archived Simulations Are Not Yet Available"))
         btn_2.pack(pady=(0,25))
         btn_3 = tk.Button(self,
                           text="Exit",
