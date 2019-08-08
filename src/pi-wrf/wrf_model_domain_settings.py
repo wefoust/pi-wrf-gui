@@ -52,3 +52,10 @@ def set_domain(lons,lats):
     subprocess.call("sed -i /stand_lon/c\\stand_lon='{}' ../../WRF_System/lib/dynamic_namelist.wps".format(x_center),shell=True)
     subprocess.call("sed -i /stand_lon/c\\stand_lon='{}' ../../WRF_System/lib/dynamic_namelist.wps".format(x_center),shell=True)
     subprocess.call("sed -i /geog_data_path/c\geog_data_path='{}' ../../WRF_System/lib/dynamic_namelist.wps".format(WPS_GEOG_Path),shell=True) 
+    
+    if (min(abs(lats[0]),abs(lats[1])) < 17) or (max(abs(lats[0]),abs(lats[1])) > 70):
+       subprocess.call("sed -i /time_step/c\\time_step=60 ../../WRF_System/lib/dynamic_namelist_input.wrf",shell=True)
+    elif max(lats) > 17 and min(lats) < -17:
+       subprocess.call("sed -i /time_step/c\\time_step=60 ../../WRF_System/lib/dynamic_namelist_input.wrf",shell=True)
+    else:
+       subprocess.call("sed -i /time_step/c\\time_step=180 ../../WRF_System/lib/dynamic_namelist_input.wrf",shell=True)
