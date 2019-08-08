@@ -125,7 +125,7 @@ echo
 
 
 #Run WRF
-export OMP_NUM_THREADS=8
+export OMP_NUM_THREADS=4
 ./wrf.exe
 #mpirun -np 4./wrf.exe
 clear
@@ -133,11 +133,8 @@ echo
 echo
 echo
 
-
 #Move and Rename output
 mv wrfout_d01_"${userstartdate:6:4}-${userstartdate:0:2}-${userstartdate:3:2}_${userstartdate:11:2}:00:00" $wrf_basis/Output/Temp_WRF_Output
-
-
 
 #Run Plotting Scripts
 echo Plotting High Temperature,Low Temperature, Precipitation, Snow Accumulation, and Reference Maps
