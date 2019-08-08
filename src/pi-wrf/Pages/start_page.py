@@ -57,4 +57,12 @@ class StartPage(tk.Frame):
                           bg=gui_color[2],
                           activebackground=gui_color[3],
                           width=20)
-        btn_2.pack()
+        btn_2.pack(pady=(0,25))
+        btn_3 = tk.Button(self,
+                          text="Exit",
+                          font=("Arial Bold",40),
+                          borderwidth=5,bg=gui_color[2],
+                          activebackground=gui_color[3],
+                          width=20,
+                          command=lambda : controller.quit_app())
+        btn_3.pack()
