@@ -96,7 +96,7 @@ RUN apt-get update && apt-get install -y \
         #
         #
         #  INSTALLING MPICH LIBRARY
-        && cd $DIR/																	                                   \
+        && cd $DIR/												           \
 	&& curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/mpich-3.0.4.tar.gz         \
 	            --output $DIR/mpich-3.0.4.tar.gz                                                                       \
         && tar -zxvf $DIR/mpich-3.0.4.tar.gz -C $DIR/                         						   \
@@ -118,7 +118,7 @@ RUN apt-get update && apt-get install -y \
         #
         #
         # INSTALLING LIBPNG LIBRARY
-        && cd $DIR/													\				                                     \
+        && cd $DIR/													\
 	&& curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/libpng-1.2.50.tar.gz    \
 	            --output $DIR/libpng-1.2.50.tar.gz                                                                  \
 	&& tar -zxvf $DIR/libpng-1.2.50.tar.gz -C $DIR/                        						\
@@ -129,7 +129,7 @@ RUN apt-get update && apt-get install -y \
         #
         #
         # INSTALLING JASPER LIBRARY
-        && cd $DIR/ 																 	                                  \
+        && cd $DIR/ 													  \
 	&& curl -O -L -J http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-1.900.1.tar.gz     \
 	            --output $DIR/jasper-1.900.1.tar.gz                                                                   \
 	&& tar -zxvf $DIR/jasper-1.900.1.tar.gz -C $DIR/                                                                  \
