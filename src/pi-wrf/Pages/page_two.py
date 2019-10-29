@@ -1,7 +1,7 @@
 #Importing modules 
 import sys
 from importlist import *
-
+import pickle
 #Set Color Scheme and Font
 gui_color=color_scheme(1)                                            # 1=default
 LARGE_FONT = ("Verdana", 12)
@@ -162,14 +162,20 @@ class PageTwo(tk.Frame):
         btn_2.pack(side=tk.RIGHT,fill=tk.X)
         
         # Creating Matplotlib figure
-        m=Basemap(projection='cyl',
-                  llcrnrlat=-90,
-                  urcrnrlat=90,
-                  llcrnrlon=-180,
-                  urcrnrlon=180,
-                  resolution='l',
-                  area_thresh=1,
-                  ax=ax)
+        
+
+        pkfile='map.pkl'
+        m=pickle.load(open(pkfile,'rb'))
+        fig, ax = plt.subplots(1,1)
+        m.ax=ax
+        #m=Basemap(projection='cyl',
+        #          llcrnrlat=-90,
+        #          urcrnrlat=90,
+        #          llcrnrlon=-180,
+        #          urcrnrlon=180,
+        #          resolution='l',
+        #          area_thresh=1,
+        #          ax=ax)
         m.drawcoastlines(color="white",linewidth=.5)
         m.fillcontinents(color='forestgreen',lake_color='cornflowerblue')
         test_hline=m.drawparallels(np.arange(-90,91,30))
