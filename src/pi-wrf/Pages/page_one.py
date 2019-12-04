@@ -62,13 +62,13 @@ if currentday >= 15:
         user_enddate_range=[currentday,days_in_month[0]]
 
 #Map current time to zulu time            
-if (currenthour >= 2) and (currenthour < 8):
+if (currenthour >= 3) and (currenthour < 9):
     forecasthour=00
-elif (currenthour >= 8) and (currenthour < 14):
+elif (currenthour >= 9) and (currenthour < 15):
     forecasthour=6
-elif (currenthour >= 14) and (currenthour < 20):
+elif (currenthour >= 15) and (currenthour < 21):
     forecasthour=12
-elif (currenthour >= 20) or (currenthour < 2):
+elif (currenthour >= 21) or (currenthour < 3):
     forecasthour=18
 
 
