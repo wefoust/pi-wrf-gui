@@ -52,7 +52,7 @@ class StartPage(tk.Frame):
         if check_internet():
             btn_1.config(command=lambda : [controller.show_frame])
         else:
-            btn_1.config(command=lambda : [messagebox.showwarning("Warning", "No network connection detected. cannot run live simulation. Please exit application and check connection."))])                      
+            btn_1.config(command=lambda : [messagebox.showwarning("Warning", "No network connection detected. cannot run live simulation. Please exit application and check connection.")])                      
         btn_2 = tk.Button(self,
                           text="Run Archived Simulation",
                           font=("Arial Bold",40),
