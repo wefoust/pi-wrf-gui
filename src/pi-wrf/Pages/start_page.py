@@ -15,7 +15,6 @@ def check_internet():
         _ = requests.get(url, timeout=timeout)
         return True
     except requests.ConnectionError:
-        messagebox.showwarning("Warning", "No Network Connection Detected Cannot Run Simulation")
         return False
 
 class StartPage(tk.Frame):
@@ -50,7 +49,10 @@ class StartPage(tk.Frame):
                           width=20,
                           command=lambda : [controller.show_frame(PageOne),check_internet()])
         btn_1.pack(pady=(250,25))
-        
+        if check_internet():
+            btn_1.config(command=lambda : [controller.show_frame])
+        else:
+            btn_1.config(command=lambda : [messagebox.showwarning("Warning", "No network connection detected. cannot run live simulation. Please exit application and check connection."))])                      
         btn_2 = tk.Button(self,
                           text="Run Archived Simulation",
                           font=("Arial Bold",40),
