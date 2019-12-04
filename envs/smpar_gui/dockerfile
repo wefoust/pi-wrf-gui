@@ -170,7 +170,7 @@ ADD /resources/*.* /pi-wrf/WRF_System/lib/
 ADD /src/Run_WRF_GUI_NCL /pi-wrf/WRF_System/lib/
 ADD /src/cleanwrf /pi-wrf/WRF_System/lib/
 ADD /src/Plotting_Scripts/* /pi-wrf/WRF_System/lib/Plotting_Scripts/
-ADD /src/pi-wrf/*.py  /pi-wrf/pi_wrf/pi_wrf/
+ADD /src/pi-wrf/*.*  /pi-wrf/pi_wrf/pi_wrf/
 ADD /src/pi-wrf/Pages/* /pi-wrf/pi_wrf/pi_wrf/Pages/
 ADD /src/Run_WRF_GUI /pi-wrf/
 ADD /resources/images/*.gif /pi-wrf/Output/
