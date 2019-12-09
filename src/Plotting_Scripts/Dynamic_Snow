@@ -2,11 +2,7 @@
 ;	Eliott Foust and Mary Haley    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;	Load in WRF ARW file
-;a   =  addfile("/home/pi/Desktop/WRF_3.9.1_SMPAR/Output/Temp_WRF_Output","r")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	WRF & csv city-data files loaded from Run_WRF_GUI_NCL script
 
 
 ;	Setting workstation
@@ -18,7 +14,6 @@ wks=gsn_open_wks("png","/home/pi/pi-wrf/Output/Snow_Depth")
 
 
 ;	Reading in City Data
-;csv_file = asciiread("/home/pi/Desktop/WRF_3.9.1_SMPAR/WRF_System/lib/Shortened-US-City-Pop.csv",-1,"string")
 data       = csv_file(1:)
 lats       = tofloat(str_get_field(data,2,","))
 lons       = tofloat(str_get_field(data,3,","))
@@ -80,15 +75,9 @@ res@mpNationalLineThicknessF    =  6
 res@mpGeophysicalLineThicknessF =  6
 res@mpOutlineDrawOrder          = "PostDraw"
 
-                                              ; Contour Settings
-;cmap                      = read_colormap_file("MPL_cool")
-;cmap(0,:)                 = namedcolor2rgba("white")
-;res@cnLevelSelectionMode   = "ManualLevels"     ; Set manual contour levels
-
-res@ContourParameters     = (/0,8.,1/) 
-res@cnMinLevelValF       = 1                  ; Set min contour level
-res@cnMaxLevelValF       = 12                 ; Set max contour level
-res@cnLevelSpacingF      = 2                  ; Set contour spacing 
+; Contour Settings
+res@cnLevelSelectionMode   = "ExplicitLevels"     ; Set manual contour levels
+res@cnLevels               = (/ .01, .02, .05, .1, .2, .5, 1, 3, 6, 12, 18, 24/)
 
 res@cnFillOn             = True               ; Turn on contour fill
 res@cnLinesOn            = False              ; Turn off contour lines
