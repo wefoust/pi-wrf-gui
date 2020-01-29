@@ -27,6 +27,7 @@ In order to run this application, the container platform, [Docker](https://www.d
     3) type "**run**" to run the application
 
 ### Create a container & launch app (MAC)
+--prerequisite (open X11 security settings and check "Allow connections from network clients")
 1. type the command "**open -a XQuartz**"
 2. type the command "**IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')**"
 3. type the command "**xhost + $IP**"
